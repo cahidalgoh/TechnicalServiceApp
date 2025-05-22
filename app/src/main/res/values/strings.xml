@@ -1,6 +1,31 @@
 <resources>
-    <string name="app_name">TechnicalServiceApp</string>
-    <string name="tech_service_welcome_text">Welcome to Technical Service App</string>
+    <string name="app_name">Technical Service</string>
+    <!-- Literales constantes -->
+    <string name="constant_technician_id">TECHNICIAN_ID</string>
+    <string name="constant_technician_name">TECHNICIAN_NAME</string>
+    <string name="constant_technician_text">Technician</string>
+
+    <!-- Login -->
+    <string name="login_username">Username:</string>
+    <string name="login_username_hint">Write your username</string>
+    <string name="login_password">Password:</string>
+    <string name="login_password_hint">Write your password</string>
+    <string name="login_text">Login</string>
+    <string name="login_error_message">Incorrect username or password</string>
+    <string name="login_error">Incorrect username or password</string>
+
+    <!-- Main Activity -->
+    <string name="tech_service_welcome_text">Hi %s\nWelcome to Technical Service App</string>
     <string name="btn_manage_customers">Manage Customers</string>
     <string name="btn_manage_orders">Manage Orders</string>
+    <!-- Menu Main -->
+    <string name="menu_action_config">Config</string>
+    <string name="menu_action_about">About</string>
+    <string name="menu_action_logout">Logout</string>
+
+    <!-- Main Activity -->
+    <string name="menu_item_config">Config</string>
+    <string name="menu_item_about">About</string>
+    <string name="menu_item_logout">Logout</string>
+
 </resources>
