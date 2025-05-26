@@ -1,12 +1,15 @@
 package com.itesthida.techserviceapp.data.database
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.itesthida.techserviceapp.data.database.dao.TechnicianDAO
-import com.itesthida.techserviceapp.data.database.entities.Technician
+//import android.content.Context
+//import androidx.room.Database
+//import androidx.room.Room
+//import androidx.room.RoomDatabase
+//import com.itesthida.techserviceapp.data.database.dao.TechnicianDAO
+//import com.itesthida.techserviceapp.data.database.entities.Technician
 
+abstract class AppDatabase{
+
+}/*
 @Database(
     entities = [Technician::class],
     version = 1,
@@ -41,3 +44,4 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
+        */

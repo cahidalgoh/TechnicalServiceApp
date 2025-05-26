@@ -86,11 +86,31 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+
     /**
      * Valida las credenciales introducidas por el usuario
      */
     private fun validateCredentials(email: String, password: String) {
+
+        if (email == "admin" && password == "admin"){
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+            // Para que no vuelva a esta pantalla si hace uso del botón volver
+            finish()
+        } else{
+            // Datos de login incorrectos
+            // Mensaje al usuario
+            Toast.makeText(this@LoginActivity, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Valida las credenciales introducidas por el usuario
+     */
+    private fun validateCredentialsRoom(email: String, password: String) {
         // Inicia una corrutina en segundo plano (Dispatchers.IO) para no bloquear la interfaz.
+        /*
         CoroutineScope(Dispatchers.IO).launch {
             val database = AppDatabase.getDatabase(applicationContext)
 
@@ -113,6 +133,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+        */
 
     }
 }

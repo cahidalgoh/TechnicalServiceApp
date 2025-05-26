@@ -36,6 +36,7 @@
     <string name="tech_service_welcome_text">Hi %s\nWelcome to Technical Service App</string>
     <string name="btn_manage_customers">Manage Customers</string>
     <string name="btn_manage_orders">Manage Orders</string>
+    <string name="btn_manage_equipmet_types">Manage Equipments Types</string>
     <!-- Menu Main -->
     <string name="menu_action_config">Config</string>
     <string name="menu_action_about">About</string>
