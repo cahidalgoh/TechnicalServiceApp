@@ -6,15 +6,33 @@
     <string name="constant_technician_text">Technician</string>
 
     <!-- Login -->
-    <string name="login_username">Username:</string>
-    <string name="login_username_hint">Write your username</string>
+    <string name="login_username">Email:</string>
+    <string name="login_username_hint">Write your email</string>
     <string name="login_password">Password:</string>
     <string name="login_password_hint">Write your password</string>
     <string name="login_text">Login</string>
-    <string name="login_error_message">Incorrect username or password</string>
-    <string name="login_error">Incorrect username or password</string>
+    <string name="login_new_technician">New technician</string>
+    <string name="login_error_message">Incorrect email or password</string>
+    <string name="login_incomplete_fields">You must complete all fields</string>
+
+    <!-- New technician -->
+    <string name="new_technician_text">Register new technician</string>
+    <string name="new_technician_name">Name:</string>
+    <string name="new_technician_write_name">Write your name</string>
+    <string name="new_technician_last_name">Last name:</string>
+    <string name="new_technician_write_last_name">Write your last name</string>
+    <string name="new_technician_email">Email:</string>
+    <string name="new_technician_write_email">Write your email</string>
+    <string name="new_technician_password">Password:</string>
+    <string name="new_technician_write_password">Write your password</string>
+    <string name="new_technician_repeat_password">Repeat your Password:</string>
+    <string name="new_technician_repeat_password_hint">Write your password again</string>
+    <string name="new_technician_phone">Phone:</string>
+    <string name="new_technician_write_phone">Write your phone</string>
+    <string name="new_technician_btn_register">Register</string>
 
     <!-- Main Activity -->
+    <string name="tech_service_message_login_ok">You are in</string>
     <string name="tech_service_welcome_text">Hi %s\nWelcome to Technical Service App</string>
     <string name="btn_manage_customers">Manage Customers</string>
     <string name="btn_manage_orders">Manage Orders</string>

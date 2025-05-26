@@ -1,10 +1,9 @@
 package com.itesthida.techserviceapp.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,14 +30,20 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         // Inicialización de las variables y/o componentes
         initComponents()
 
-        // Inicialización de los listeners
-        initListeners()
+        // Para el acceso a las pantallas comprobamos si hay técnico en la session
+        if(isThereAnActiveSession()){
 
-        // inicialización de los datos en la intefaz gráfica
-        initUI()
+            // Inicialización de los listeners
+            initListeners()
+
+            // inicialización de los datos en la intefaz gráfica
+            initUI()
+
+        }
     }
 
     /**
@@ -47,14 +52,9 @@ class MainActivity : AppCompatActivity() {
     private fun initComponents() {
         // Inicializamos la variable session
         session = SessionManager(this)
-        // Obtenemos el nombre del técnico
-        /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-         *
-         * - * Pendiente de obtenenr el nombre de la sesión * - *
-         *
-         */
-        technicianName = "Marley"
-        //Para el acceso a los componentes del layout
+
+        // Si existe ténico, seguimos con la ejecución de la app.
+        // Para el acceso a los componentes del layout
         // Inicializamos el binding pasándole la propiedad layoutInflater que ya está en el Activity
         binding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity() {
      * Inicializa los componentes de la interfaz gráfica con los datos obtenidos previamente
      */
     private fun initUI() {
+        // Obtenemos el nombre del técnico de  la session
+        technicianName = session.getTechnicianName(this)!!
         binding.tvWelcome.text = String.format(getString(R.string.tech_service_welcome_text), technicianName)
     }
 
@@ -105,10 +107,46 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.actionLogout -> {
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+
+                // Cerramos la cesión del usuario
+                session.logout()
+
+                // Redireccionamos a la pantalla de login
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                // Para que no vuelva a esta pantalla si hace uso del botón volver
+                finish()
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    /**
+     * Comprueba si existe una sesión activa
+     */
+    private fun isThereAnActiveSession(): Boolean {
+        val idTecnico = session.getTechnicianId()
+        // Comprobamos el id del técnico
+        if(session.getTechnicianId() == -1){
+            // No hay session guardada
+            // Redirigimos a la pantalla de inicio de session
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+
+            // Para que no vuelva a esta pantalla si hace uso del botón volver
+            finish()
+
+            return false
+        }
+
+        // Existe session
+        val nombreTecnico = session.getTechnicianName(this)
+        Toast.makeText(this, getString(R.string.tech_service_message_login_ok), Toast.LENGTH_SHORT).show()
+
+        return true
+
     }
 }

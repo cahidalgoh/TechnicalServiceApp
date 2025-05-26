@@ -1,6 +1,11 @@
+// Está usando un enfoque basado en libs.versions.toml (catálogo de versiones)
+// Hay que agregar el plugin y las dependencias de Room correctamente usando
+// ese mismo sistema en el libs.versions.toml
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    //alias(libs.plugins.kotlin.kapt)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -50,4 +55,12 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
 }

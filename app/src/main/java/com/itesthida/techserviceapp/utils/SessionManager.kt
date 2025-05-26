@@ -9,10 +9,10 @@ class SessionManager (context: Context) {
 
     private val preferences: SharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE)
 
-    fun saveSession(technicianId: Int, name: String){
+    fun saveSession(id: Int, name: String){
         // Guardamos los datos
         preferences.edit().apply {
-            putInt("TECHNICIAN_ID", technicianId)
+            putInt("TECHNICIAN_ID", id)
             putString("TECHNICIAN_NAME", name)
             apply()
         }
@@ -21,7 +21,7 @@ class SessionManager (context: Context) {
     /**
      * Devuelve el id del técnico que inició sesión en la aplicación, si no hay usuario logueado, devuelve -1.
      */
-    fun getTechnicianId(): Int = preferences.getInt("TECHNICIAN_NAME", -1)
+    fun getTechnicianId(): Int = preferences.getInt("TECHNICIAN_ID", -1)
 
     /**
      * Devuelve el nombre del técnico que inició sesión en la aplicación, si no hay usuario logueado, devuelve "Technician"

@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/login_username"
+            android:text="@string/login_username"
             android:textSize="22sp"
             android:textStyle="italic|bold"/>
 
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/login_password"
+            android:text="@string/login_password"
             android:textSize="22sp"
             android:textStyle="italic|bold"/>
 
@@ -52,6 +54,15 @@
             android:layout_height="wrap_content"
             android:text="@string/login_text"
             android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/btnNewTechnician"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_new_technician"
+            android:layout_gravity="center"
+            app:icon="@drawable/ic_person"
+            android:layout_marginTop="12dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
