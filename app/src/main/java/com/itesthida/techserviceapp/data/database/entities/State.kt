@@ -1,7 +1,7 @@
 package com.itesthida.techserviceapp.data.database.entities
 
 data class State(
-    val id: Int = 0,
+    val id: Int,
     val stateName: String
 ) {
     companion object{

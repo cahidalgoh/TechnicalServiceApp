@@ -6,7 +6,7 @@ package com.itesthida.techserviceapp.data.database.entities
 //@Entity(tableName = "Technicians")
 data class Technician (
     //@PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int,
     val name: String,
     val lastName: String,
     val email: String,

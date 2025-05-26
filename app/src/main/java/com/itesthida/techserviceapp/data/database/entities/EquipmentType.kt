@@ -1,7 +1,7 @@
 package com.itesthida.techserviceapp.data.database.entities
 
 data class EquipmentType(
-    val id: Int = 0,
+    val id: Int,
     val name: String,
     val brand: String,
     val model: String

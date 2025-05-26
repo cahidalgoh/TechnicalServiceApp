@@ -1,7 +1,7 @@
 package com.itesthida.techserviceapp.data.database.entities
 
 data class TaskOrder(
-    val id: Int = 0,
+    val id: Int,
     val technician: Int,
     val customer: Int,
     val equipment: Int,
