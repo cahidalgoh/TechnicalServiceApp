@@ -17,3 +17,7 @@ data class EquipmentType(
         const val COLUMN_NAME_MODEL = "MODEL"
     }
 }
+
+/*
+
+ */
