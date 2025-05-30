@@ -7,121 +7,125 @@ import java.security.MessageDigest//Importa la clase que permite usar funciones 
  * Clase utilitaria que contiene funciones reutilizables
  */
 class TechServiceUtils {
-    /**
-     * Convierte una contraseña en un valor irreversible llamado hash.
-     * Recibe una contraseña y devuelve su hash en formato hexadecimal
-     */
-    fun hashPassword(password: String): String{
-        /*
-        Esto se usa para almacenar contraseñas de forma segura.
-        En lugar de guardar "123456", se guarda algo como "8d969eef6ecad3c29a3a629280e686cf...".
+    companion object{
 
-        SHA-256 es seguro para uso general y recomendado para hashear contraseñas, aunque en producción
-        es mejor usar bcrypt, scrypt o Argon2 porque son más lentos y protegen contra ataques de fuerza bruta.
+        /**
+         * Convierte una contraseña en un valor irreversible llamado hash.
+         * Recibe una contraseña y devuelve su hash en formato hexadecimal
          */
+        fun hashPassword(password: String): String{
+            /*
+            Esto se usa para almacenar contraseñas de forma segura.
+            En lugar de guardar "123456", se guarda algo como "8d969eef6ecad3c29a3a629280e686cf...".
 
-        // Crea una instancia del algoritmo de hash SHA-256.
-        val messageDigest = MessageDigest.getInstance("SHA-256")
+            SHA-256 es seguro para uso general y recomendado para hashear contraseñas, aunque en producción
+            es mejor usar bcrypt, scrypt o Argon2 porque son más lentos y protegen contra ataques de fuerza bruta.
+             */
 
-        // Convierte la contraseña a bytes usando codificación UTF-8.
-        // Calcula el hash: el resultado es un arreglo de bytes (ByteArray), no una cadena legible.
-        val hashBytes = messageDigest.digest(password.toByteArray(Charsets.UTF_8))
+            // Crea una instancia del algoritmo de hash SHA-256.
+            val messageDigest = MessageDigest.getInstance("SHA-256")
 
-        // Convierte el ByteArray resultante en una cadena hexadecimal legible (ej: "a2b1c3...").
-        // %02x convierte cada byte a 2 dígitos hexadecimales.
-        return hashBytes.joinToString("") { "%02x".format(it) }
+            // Convierte la contraseña a bytes usando codificación UTF-8.
+            // Calcula el hash: el resultado es un arreglo de bytes (ByteArray), no una cadena legible.
+            val hashBytes = messageDigest.digest(password.toByteArray(Charsets.UTF_8))
+
+            // Convierte el ByteArray resultante en una cadena hexadecimal legible (ej: "a2b1c3...").
+            // %02x convierte cada byte a 2 dígitos hexadecimales.
+            return hashBytes.joinToString("") { "%02x".format(it) }
+        }
+
+        fun validateEmail(email: String): Boolean{
+            val emailPattern = Patterns.EMAIL_ADDRESS
+            return emailPattern.matcher(email).matches()
+            //https://www.youtube.com/watch?v=vwD00u6Lshw
+        }
+
+        fun validatePassword(password: String): Boolean{
+            /*
+                ^: Comienza de la cadena.
+                (?!.*\\s): No debe contener espacios.
+                (?=.*[a-z]): Debe tener al menos una letra minúscula.
+                (?=.*[A-Z]): Debe tener al menos una letra mayúscula.
+                (?=.*\\d): Debe tener al menos un número.
+                (?=.*[^a-zA-Z0-9]): Debe tener al menos un carácter especial.
+                .{8,}: La contraseña debe tener al menos 8 caracteres.
+                $: Finaliza la cadena.
+            * */
+            val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$".toRegex()
+            return passwordPattern.matches(password)
+
+
+
+            /*
+
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+
+            Para comprobar la contraseña durante el registro en Kotlin Android, puedes utilizar expresiones regulares para validar el formato de la contraseña y luego almacenar la contraseña encriptada en la base de datos. La validación de la contraseña en tiempo real (en la interfaz de usuario) y la encriptación (en el servidor) son medidas de seguridad cruciales.
+    Validación de la contraseña en tiempo real (en la interfaz de usuario):
+    Recopilar la contraseña: Utiliza un EditText para que el usuario ingrese la contraseña.
+    Utilizar expresiones regulares: Define una expresión regular que establezca los requisitos mínimos para la contraseña (longitud mínima, letras mayúsculas, letras minúsculas, números, caracteres especiales, etc.).
+    Mostrar la validación: Utiliza un TextView o cualquier otro componente para mostrar mensajes de validación al usuario. Puedes usar el TextInputLayout y sus métodos para mostrar mensajes de error.
+    Ejemplo de validación con expresiones regulares (Kotlin):
+    Kotlin
+
+    import java.util.regex.Pattern
+
+    fun validarContrasenia(contrasenia: String): Boolean {
+        val patron = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$".toRegex()
+        return patron.matches(contrasenia)
     }
+    Explicación de la expresión regular:
+    ^: Comienza de la cadena.
+    (?!.*\\s): No debe contener espacios.
+    (?=.*[a-z]): Debe tener al menos una letra minúscula.
+    (?=.*[A-Z]): Debe tener al menos una letra mayúscula.
+    (?=.*\\d): Debe tener al menos un número.
+    (?=.*[^a-zA-Z0-9]): Debe tener al menos un carácter especial.
+    .{8,}: La contraseña debe tener al menos 8 caracteres.
+    $: Finaliza la cadena.
+    Encriptación de la contraseña en el servidor (importante):
+    No almacenes la contraseña en texto plano. Siempre encripta la contraseña antes de almacenarla en la base de datos.
+    Usa un algoritmo de encriptación fuerte, como bcrypt o Argon2.
+    Guarda la clave de encriptación (salt) junto con la contraseña encriptada.
+    Recomendación: Utiliza un framework de autenticación como Firebase Authentication o implementa una autenticación personalizada con un backend en la nube.
+    Validación en tiempo real en la interfaz de usuario (ejemplo con TextInputLayout):
+    Kotlin
 
-    fun validateEmail(email: String): Boolean{
-        val emailPattern = Patterns.EMAIL_ADDRESS
-        return emailPattern.matcher(email).matches()
-        //https://www.youtube.com/watch?v=vwD00u6Lshw
+    import com.google.android.material.textfield.TextInputLayout
+
+    // En tu layout XML, utiliza TextInputLayout para el EditText de la contraseña
+
+    val inputLayoutContrasenia: TextInputLayout = findViewById(R.id.inputLayoutContrasenia)
+
+    fun validarContraseniaEnTiempoReal(contrasenia: String) {
+        if (validarContrasenia(contrasenia)) {
+            inputLayoutContrasenia.error = null // Limpia el error
+            inputLayoutContrasenia.isErrorEnabled = false // Desactiva el mensaje de error
+        } else {
+            inputLayoutContrasenia.error = "Contraseña no válida" // Muestra un mensaje de error
+            inputLayoutContrasenia.isErrorEnabled = true // Activa el mensaje de error
+        }
     }
-
-    fun validatePassword(password: String): Boolean{
-        /*
-            ^: Comienza de la cadena.
-            (?!.*\\s): No debe contener espacios.
-            (?=.*[a-z]): Debe tener al menos una letra minúscula.
-            (?=.*[A-Z]): Debe tener al menos una letra mayúscula.
-            (?=.*\\d): Debe tener al menos un número.
-            (?=.*[^a-zA-Z0-9]): Debe tener al menos un carácter especial.
-            .{8,}: La contraseña debe tener al menos 8 caracteres.
-            $: Finaliza la cadena.
-        * */
-        val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$".toRegex()
-        return passwordPattern.matches(password)
+    En resumen:
+    Validación en la interfaz de usuario: Usa expresiones regulares y TextInputLayout para mostrar mensajes de error al usuario si la contraseña no cumple con los requisitos.
+    Encriptación en el servidor: Siempre encripta la contraseña antes de almacenarla en la base de datos.
+    Autenticación segura: Utiliza un framework de autenticación o implementa tu propia autenticación con un backend seguro.
 
 
-
-        /*
-
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-
-
-        Para comprobar la contraseña durante el registro en Kotlin Android, puedes utilizar expresiones regulares para validar el formato de la contraseña y luego almacenar la contraseña encriptada en la base de datos. La validación de la contraseña en tiempo real (en la interfaz de usuario) y la encriptación (en el servidor) son medidas de seguridad cruciales.
-Validación de la contraseña en tiempo real (en la interfaz de usuario):
-Recopilar la contraseña: Utiliza un EditText para que el usuario ingrese la contraseña.
-Utilizar expresiones regulares: Define una expresión regular que establezca los requisitos mínimos para la contraseña (longitud mínima, letras mayúsculas, letras minúsculas, números, caracteres especiales, etc.).
-Mostrar la validación: Utiliza un TextView o cualquier otro componente para mostrar mensajes de validación al usuario. Puedes usar el TextInputLayout y sus métodos para mostrar mensajes de error.
-Ejemplo de validación con expresiones regulares (Kotlin):
-Kotlin
-
-import java.util.regex.Pattern
-
-fun validarContrasenia(contrasenia: String): Boolean {
-    val patron = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$".toRegex()
-    return patron.matches(contrasenia)
-}
-Explicación de la expresión regular:
-^: Comienza de la cadena.
-(?!.*\\s): No debe contener espacios.
-(?=.*[a-z]): Debe tener al menos una letra minúscula.
-(?=.*[A-Z]): Debe tener al menos una letra mayúscula.
-(?=.*\\d): Debe tener al menos un número.
-(?=.*[^a-zA-Z0-9]): Debe tener al menos un carácter especial.
-.{8,}: La contraseña debe tener al menos 8 caracteres.
-$: Finaliza la cadena.
-Encriptación de la contraseña en el servidor (importante):
-No almacenes la contraseña en texto plano. Siempre encripta la contraseña antes de almacenarla en la base de datos.
-Usa un algoritmo de encriptación fuerte, como bcrypt o Argon2.
-Guarda la clave de encriptación (salt) junto con la contraseña encriptada.
-Recomendación: Utiliza un framework de autenticación como Firebase Authentication o implementa una autenticación personalizada con un backend en la nube.
-Validación en tiempo real en la interfaz de usuario (ejemplo con TextInputLayout):
-Kotlin
-
-import com.google.android.material.textfield.TextInputLayout
-
-// En tu layout XML, utiliza TextInputLayout para el EditText de la contraseña
-
-val inputLayoutContrasenia: TextInputLayout = findViewById(R.id.inputLayoutContrasenia)
-
-fun validarContraseniaEnTiempoReal(contrasenia: String) {
-    if (validarContrasenia(contrasenia)) {
-        inputLayoutContrasenia.error = null // Limpia el error
-        inputLayoutContrasenia.isErrorEnabled = false // Desactiva el mensaje de error
-    } else {
-        inputLayoutContrasenia.error = "Contraseña no válida" // Muestra un mensaje de error
-        inputLayoutContrasenia.isErrorEnabled = true // Activa el mensaje de error
-    }
-}
-En resumen:
-Validación en la interfaz de usuario: Usa expresiones regulares y TextInputLayout para mostrar mensajes de error al usuario si la contraseña no cumple con los requisitos.
-Encriptación en el servidor: Siempre encripta la contraseña antes de almacenarla en la base de datos.
-Autenticación segura: Utiliza un framework de autenticación o implementa tu propia autenticación con un backend seguro.
-
-
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+    *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 
 
 
-         */
+             */
 
+
+        }
 
     }
 }
