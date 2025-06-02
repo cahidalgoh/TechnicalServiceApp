@@ -50,9 +50,9 @@ class TaskOrderRepositoryImpl(private val context: Context) : TaskOrderRepositor
             cursor?.use { c ->
                 while (c.moveToNext()) {
                     val taskOrder = TaskOrder(
-                        id = c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_ID)),
                         technician = TechnicianRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_TECHNICIAN))) ?: Technician(Technician.DEFAULT_ID, "", "", "", ""),
-                        customer = CustomerRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_CUSTOMER))) ?: Customer(Customer.DEFAULT_ID, "", "", "", "", ""),
+                        customer = CustomerRepositoryImpl(context).getById(c.getLong(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_CUSTOMER))) ?: Customer(Customer.DEFAULT_ID, "", "", "", "", ""),
                         equipment = EquipmentRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_EQUIPMENT))) ?: Equipment(Equipment.DEFAULT_ID, Customer(Customer.DEFAULT_ID, "", "", "", "", ""), EquipmentType(
                             EquipmentType.DEFAULT_ID, "", "", ""), ""),
                         description = c.getString(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_DESCRIPTION)),
@@ -85,9 +85,9 @@ class TaskOrderRepositoryImpl(private val context: Context) : TaskOrderRepositor
             cursor?.use { c ->
                 if (c.moveToFirst()) {
                     taskOrder = TaskOrder(
-                        id = c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_ID)),
                         technician = TechnicianRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_TECHNICIAN))) ?: Technician(Technician.DEFAULT_ID, "", "", "", ""),
-                        customer = CustomerRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_CUSTOMER))) ?: Customer(Customer.DEFAULT_ID, "", "", "", "", ""),
+                        customer = CustomerRepositoryImpl(context).getById(c.getLong(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_CUSTOMER))) ?: Customer(Customer.DEFAULT_ID, "", "", "", "", ""),
                         equipment = EquipmentRepositoryImpl(context).getById(c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_EQUIPMENT))) ?: Equipment(Equipment.DEFAULT_ID, Customer(Customer.DEFAULT_ID, "", "", "", "", ""), EquipmentType(EquipmentType.DEFAULT_ID, "", "", ""), ""),
                         description = c.getString(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_DESCRIPTION)),
                         date = c.getInt(c.getColumnIndexOrThrow(TaskOrder.COLUMN_NAME_DATE)),

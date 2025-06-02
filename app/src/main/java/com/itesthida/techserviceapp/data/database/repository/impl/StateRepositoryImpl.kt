@@ -44,7 +44,7 @@ class StateRepositoryImpl(private val context: Context) : StateRepository {
             cursor?.use { c ->
                 while(c.moveToNext()){
                     val state = State(
-                        id = c.getInt(c.getColumnIndexOrThrow(State.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(State.COLUMN_NAME_ID)),
                         stateName = c.getString(c.getColumnIndexOrThrow(State.COLUMN_NAME_STATE_NAME))
                     )
                     states.add(state)
@@ -76,7 +76,7 @@ class StateRepositoryImpl(private val context: Context) : StateRepository {
             cursor?.use { c ->
                 if(cursor.moveToFirst()){
                     state = State(
-                        id = c.getInt(c.getColumnIndexOrThrow(State.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(State.COLUMN_NAME_ID)),
                         stateName = c.getString(c.getColumnIndexOrThrow(State.COLUMN_NAME_STATE_NAME))
                     )
                 }

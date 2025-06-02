@@ -50,7 +50,7 @@ class TechnicianRepositoryImpl(private val context: Context) : TechnicianReposit
             cursor?.use { c ->
                 while(c.moveToNext()){
                     val technician = Technician(
-                        id = c.getInt(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_EMAIL)),
@@ -85,7 +85,7 @@ class TechnicianRepositoryImpl(private val context: Context) : TechnicianReposit
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     technician = Technician(
-                        id = c.getInt(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_EMAIL)),
@@ -162,7 +162,7 @@ class TechnicianRepositoryImpl(private val context: Context) : TechnicianReposit
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     technician = Technician(
-                        id = c.getInt(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_EMAIL)),
@@ -198,7 +198,7 @@ class TechnicianRepositoryImpl(private val context: Context) : TechnicianReposit
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     technician = Technician(
-                        id = c.getInt(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Technician.COLUMN_NAME_EMAIL)),

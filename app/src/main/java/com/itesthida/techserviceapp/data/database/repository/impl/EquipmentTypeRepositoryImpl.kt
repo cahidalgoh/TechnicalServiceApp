@@ -10,7 +10,8 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
     // Instancia para la conexión con la base de datos
     private val dbHelper = DatabaseHelper.getInstance(context)
 
-    override fun insert(equipmentType: EquipmentType) {
+    override fun insert(equipmentType: EquipmentType): Long? {
+        var newRowId : Long? = null
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
         val db = dbHelper.getDatabase()
@@ -21,9 +22,10 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
                 put(EquipmentType.COLUMN_NAME_BRAND, equipmentType.brand)
                 put(EquipmentType.COLUMN_NAME_MODEL, equipmentType.model)
             }
-            it.insert(EquipmentType.TABLE_NAME, null, values)
+            newRowId = it.insert(EquipmentType.TABLE_NAME, null, values)
         }
         dbHelper.closeConnection()
+        return newRowId
     }
 
     override fun getAll(): List<EquipmentType> {
@@ -46,7 +48,7 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
             cursor?.use { c ->
                 while (c.moveToNext()){
                     val equipmentType = EquipmentType(
-                        id = c.getInt(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_NAME)),
                         brand = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_BRAND)),
                         model = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_MODEL))
@@ -60,7 +62,7 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
         return equipmentTypes
     }
 
-    override fun getById(id: Int): EquipmentType? {
+    override fun getById(id: Long): EquipmentType? {
         var equipmentType : EquipmentType? = null
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
@@ -80,7 +82,7 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     equipmentType = EquipmentType(
-                        id = c.getInt(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_NAME)),
                         brand = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_BRAND)),
                         model = c.getString(c.getColumnIndexOrThrow(EquipmentType.COLUMN_NAME_MODEL))
@@ -115,7 +117,7 @@ class EquipmentTypeRepositoryImpl(private val context: Context) : EquipmentTypeR
         dbHelper.closeConnection()
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
         val db = dbHelper.getDatabase()

@@ -58,4 +58,15 @@
     <string name="state_progress">In progress</string>
     <string name="state_completed">Completed</string>
     <string name="state_cancelled">Cancelled</string>
+
+    <!-- New technician -->
+    <string name="new_customer_text">Register new customer</string>
+    <string name="new_customer_bt_save">Save customer</string>
+    <string name="new_customer_name">Name</string>
+    <string name="new_customer_last_name">Last name</string>
+    <string name="new_customer_email">Email</string>
+    <string name="new_customer_phone">Phone</string>
+    <string name="new_customer_address">Address</string>
+    <string name="new_customer_equipment_type">Equipment type</string>
+    <string name="new_customer_serial_number">Serial number</string>
 </resources>

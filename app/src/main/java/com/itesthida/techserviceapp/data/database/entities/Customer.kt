@@ -1,7 +1,7 @@
 package com.itesthida.techserviceapp.data.database.entities
 
 data class Customer(
-    val id: Int = 0,
+    val id: Long,
     val name: String,
     val lastName: String,
     val email: String,
@@ -10,7 +10,7 @@ data class Customer(
 ) {
     companion object{
         // Constante para el id por defecto
-        const val DEFAULT_ID = -1
+        const val DEFAULT_ID = -1L
         // Constantes para los datos de la tabla, nombre de tabla y columnas
         const val TABLE_NAME = "CUSTOMERS"
         const val COLUMN_NAME_ID = "ID"

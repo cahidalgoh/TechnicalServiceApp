@@ -10,7 +10,8 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
     // Instancia para la conexión con la base de datos
     private val dbHelper = DatabaseHelper.getInstance(context)
 
-    override fun insert(customer: Customer) {
+    override fun insert(customer: Customer): Long? {
+        var newRowId : Long? = -1L
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
         val db = dbHelper.getDatabase()
@@ -23,10 +24,11 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
                 put(Customer.COLUMN_NAME_PHONE, customer.phone)
                 put(Customer.COLUMN_NAME_ADDRESS, customer.address)
             }
-            it.insert(Customer.TABLE_NAME, null, values)
+            newRowId = it.insert(Customer.TABLE_NAME, null, values)
         }
         // Cerramos la conexión con la base de datos
         dbHelper.closeConnection()
+        return newRowId
     }
 
     override fun getAll(): List<Customer> {
@@ -48,7 +50,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
             cursor?.use { c ->
                 while(c.moveToNext()){
                     val customer = Customer(
-                        id = c.getInt(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_EMAIL)),
@@ -64,7 +66,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
         return customers
     }
 
-    override fun getById(id: Int): Customer? {
+    override fun getById(id: Long): Customer? {
         var customer : Customer? = null
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
@@ -84,7 +86,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     customer = Customer(
-                        id = c.getInt(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_ID)),
                         name = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_NAME)),
                         lastName = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_LAST_NAME)),
                         email = c.getString(c.getColumnIndexOrThrow(Customer.COLUMN_NAME_EMAIL)),
@@ -123,7 +125,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
         dbHelper.closeConnection()
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Long) {
         // Abrimos conexión con la base de datos
         dbHelper.openConnection()
         val db = dbHelper.getDatabase()

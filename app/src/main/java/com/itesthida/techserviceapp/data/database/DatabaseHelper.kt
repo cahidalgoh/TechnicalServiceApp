@@ -180,6 +180,9 @@ class DatabaseHelper private constructor(private val context: Context) :
 
         // Insertamos los estados iniciales
         insertInitialStates(context, db)
+
+        // Inseertamos unos tipos de equipos iniciales
+        insertInitialEquipmentTypes(context, db)
     }
 
     /**
@@ -239,6 +242,32 @@ class DatabaseHelper private constructor(private val context: Context) :
         )
         for (state in states) {
             db.execSQL("INSERT INTO ${State.TABLE_NAME} (${State.COLUMN_NAME_STATE_NAME}) VALUES ('$state')")
+        }
+    }
+
+
+
+    private fun insertInitialEquipmentTypes(context: Context, db: SQLiteDatabase) {
+
+        val equipmentTypes = listOf(
+        Triple("Lavadora", "Samsung", "WF45T6000AW"),
+        Triple("Refrigerador", "LG", "LTCS24223S"),
+        Triple("Horno Microondas", "Panasonic", "NN-SN966S"),
+        Triple("Aire Acondicionado", "Daikin", "FTKF35TV16U"),
+        Triple("Lavavajillas", "Bosch", "SHX878ZD5N"),
+        Triple("Secadora", "Whirlpool", "WED4815EW"),
+        Triple("Televisor", "Sony", "X90K"),
+        Triple("Horno Eléctrico", "Oster", "TSSTTVFDDG"),
+        Triple("Estufa", "Mabe", "EM7620BAPN0"),
+        Triple("Campana Extractora", "Teka", "CNL 6815 Plus")
+        )
+
+        for ((name, brand, model) in equipmentTypes) {
+            db.execSQL(
+                "INSERT INTO ${EquipmentType.TABLE_NAME} " +
+                        "(${EquipmentType.COLUMN_NAME_NAME}, ${EquipmentType.COLUMN_NAME_BRAND}, ${EquipmentType.COLUMN_NAME_MODEL}) " +
+                        "VALUES ('$name', '$brand', '$model')"
+            )
         }
     }
 }

@@ -17,10 +17,10 @@ class SessionManager (context: Context) {
         private const val DEFAULT_TECHNICIAN_NAME = "Technician"
     }
 
-    fun saveSession(id: Int, name: String){
+    fun saveSession(id: Long, name: String){
         // Guardamos los datos
         preferences.edit().apply {
-            putInt(KEY_TECHNICIAN_ID, id)
+            putLong(KEY_TECHNICIAN_ID, id)
             putString(KEY_TECHNICIAN_NAME, name)
             putBoolean(IS_LOGGED_IN, true)
             apply()

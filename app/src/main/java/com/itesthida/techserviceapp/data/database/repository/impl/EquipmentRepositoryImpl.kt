@@ -55,14 +55,14 @@ class EquipmentRepositoryImpl(private val context: Context) : EquipmentRepositor
             cursor?.use { c ->
                 while (c.moveToNext()){
                     val equipment = Equipment(
-                        id = c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_ID)),
                         customer = customerRepository.getById(
-                            c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_CUSTOMER))
+                            c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_CUSTOMER))
                         ) ?: Customer(
                             Customer.DEFAULT_ID, "", "", "", "", ""
                         ),
                         equipmentType = equipmentTypeRepository.getById(
-                            c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_EQUIPMENT_TYPE))
+                            c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_EQUIPMENT_TYPE))
                         ) ?: EquipmentType(
                             EquipmentType.DEFAULT_ID, "", "", ""
                         ),
@@ -98,14 +98,14 @@ class EquipmentRepositoryImpl(private val context: Context) : EquipmentRepositor
             cursor?.use { c ->
                 if(c.moveToFirst()){
                     equipment = Equipment(
-                        id = c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_ID)),
+                        id = c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_ID)),
                         customer = customerRepository.getById(
-                            c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_CUSTOMER))
+                            c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_CUSTOMER))
                         ) ?: Customer(
                             Customer.DEFAULT_ID, "", "", "", "", ""
                         ),
                         equipmentType = equipmentTypeRepository.getById(
-                            c.getInt(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_EQUIPMENT_TYPE))
+                            c.getLong(c.getColumnIndexOrThrow(Equipment.COLUMN_NAME_EQUIPMENT_TYPE))
                         ) ?: EquipmentType(
                             EquipmentType.DEFAULT_ID, "", "", ""
                         ),

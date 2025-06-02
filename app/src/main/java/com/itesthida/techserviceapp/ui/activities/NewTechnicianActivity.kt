@@ -31,7 +31,17 @@ class NewTechnicianActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_new_technician)
+        //setContentView(R.layout.activity_new_technician)
+
+        // Para el acceso a los componentes del layout
+        // Inicializamos el binding a través de la clase que representa el layout del login
+        // pasándole la propiedad layoutInflater que ya está en el Activity
+        binding = ActivityNewTechnicianBinding.inflate(layoutInflater)
+
+        // Para el acceso a los componentes del layout establecemos en la vista el activity desde el binding
+        // inicializado con todas las referencias a los componentes que tengan un id en el layout
+        setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -48,14 +58,6 @@ class NewTechnicianActivity : AppCompatActivity() {
      * Inicialización de variables declaradas
      */
     private fun initComponents() {
-        // Para el acceso a los componentes del layout
-        // Inicializamos el binding a través de la clase que representa el layout del login
-        // pasándole la propiedad layoutInflater que ya está en el Activity
-        binding = ActivityNewTechnicianBinding.inflate(layoutInflater)
-
-        // Para el acceso a los componentes del layout establecemos en la vista el activity desde el binding
-        // inicializado con todas las referencias a los componentes que tengan un id en el layout
-        setContentView(binding.root)
 
         // Inicializamos el SessionManager
         session = SessionManager(this)

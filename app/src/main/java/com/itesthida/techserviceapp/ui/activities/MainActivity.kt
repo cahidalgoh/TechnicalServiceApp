@@ -24,7 +24,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+
+        // Si existe ténico, seguimos con la ejecución de la app.
+        // Para el acceso a los componentes del layout
+        // Inicializamos el binding pasándole la propiedad layoutInflater que ya está en el Activity
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        // Para el acceso a los componentes del layout establecemos en la vista el activity desde el binding
+        // inicializado con todas las referencias a los componentes que tengan un id en el layout
+        setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -52,15 +61,6 @@ class MainActivity : AppCompatActivity() {
     private fun initComponents() {
         // Inicializamos la variable session
         session = SessionManager(this)
-
-        // Si existe ténico, seguimos con la ejecución de la app.
-        // Para el acceso a los componentes del layout
-        // Inicializamos el binding pasándole la propiedad layoutInflater que ya está en el Activity
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
-        // Para el acceso a los componentes del layout establecemos en la vista el activity desde el binding
-        // inicializado con todas las referencias a los componentes que tengan un id en el layout
-        setContentView(binding.root)
     }
 
     /**
@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initListeners() {
         binding.btnCustomers.setOnClickListener {
+            // Para la pantalla Add Customer
+            val intent = Intent(this, AddCustomerActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this, "Go to Customers View", Toast.LENGTH_SHORT).show()
         }
 
