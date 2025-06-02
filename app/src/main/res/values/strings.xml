@@ -14,6 +14,7 @@
     <string name="login_new_technician">New technician</string>
     <string name="login_error_message">Incorrect email or password</string>
     <string name="login_incomplete_fields">You must complete all fields</string>
+    <string name="login_success">You have successfully logged in</string>
 
     <!-- New technician -->
     <string name="new_technician_text">Register new technician</string>
@@ -30,6 +31,11 @@
     <string name="new_technician_phone">Phone:</string>
     <string name="new_technician_write_phone">Write your phone</string>
     <string name="new_technician_btn_register">Register</string>
+    <string name="new_technician_different_password">The passwords entered do not match</string>
+    <string name="new_technician_exists_email">The email is already registered</string>
+    <string name="new_technician_registration_ok">Successful registration</string>
+    <string name="new_technician_invalid_email">Invalid email</string>
+
 
     <!-- Main Activity -->
     <string name="tech_service_message_login_ok">You are in</string>
@@ -47,4 +53,9 @@
     <string name="menu_item_about">About</string>
     <string name="menu_item_logout">Logout</string>
 
+    <!-- States -->
+    <string name="state_pending">Pending</string>
+    <string name="state_progress">In progress</string>
+    <string name="state_completed">Completed</string>
+    <string name="state_cancelled">Cancelled</string>
 </resources>

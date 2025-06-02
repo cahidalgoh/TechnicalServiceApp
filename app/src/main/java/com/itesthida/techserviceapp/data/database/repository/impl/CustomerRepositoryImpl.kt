@@ -25,6 +25,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
             }
             it.insert(Customer.TABLE_NAME, null, values)
         }
+        // Cerramos la conexión con la base de datos
         dbHelper.closeConnection()
     }
 
@@ -58,6 +59,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
                 }
             }
         }
+        // Cerramos la conexión con la base de datos
         dbHelper.closeConnection()
         return customers
     }
@@ -92,6 +94,7 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
                 }
             }
         }
+        // Cerramos la conexión con la base de datos
         dbHelper.closeConnection()
         return customer
     }
@@ -114,12 +117,25 @@ class CustomerRepositoryImpl(private val context: Context) : CustomerRepository 
                 values,
                 "${Customer.COLUMN_NAME_ID} = ?",
                 arrayOf(customer.id.toString())
-                )
+            )
         }
+        // Cerramos la conexión con la base de datos
         dbHelper.closeConnection()
     }
 
     override fun delete(id: Int) {
-        TODO("Not yet implemented")
+        // Abrimos conexión con la base de datos
+        dbHelper.openConnection()
+        val db = dbHelper.getDatabase()
+
+        db?.let {
+            it.delete(
+                Customer.TABLE_NAME,
+                "${Customer.COLUMN_NAME_ID} = ?",
+                arrayOf(id.toString())
+            )
+        }
+        // Cerramos la conexión con la base de datos
+        dbHelper.closeConnection()
     }
 }

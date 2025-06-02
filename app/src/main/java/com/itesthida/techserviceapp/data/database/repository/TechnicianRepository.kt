@@ -8,4 +8,6 @@ interface TechnicianRepository {
     fun getById(id: Int): Technician?
     fun update(technician: Technician)
     fun delete(id: Int)
+    fun login(email: String, password: String): Technician?
+    fun getByEmail(email: String): Technician?
 }

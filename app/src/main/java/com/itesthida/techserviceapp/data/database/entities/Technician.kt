@@ -14,7 +14,7 @@ data class Technician (
 ){
     companion object{
         // Constante para el id por defecto
-        const val DEFAULT_ID = -1L
+        const val DEFAULT_ID = -1
         // Constantes para los datos de la tabla, nombre de tabla y columnas
         const val TABLE_NAME = "TECHNICIANS"
         const val COLUMN_NAME_ID = "ID"

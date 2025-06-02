@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initUI() {
         // Obtenemos el nombre del técnico de  la session
-        technicianName = session.getTechnicianName(this)!!
+        technicianName = session.getTechnicianName()!!
         binding.tvWelcome.text = String.format(getString(R.string.tech_service_welcome_text), technicianName)
     }
 
@@ -128,9 +128,8 @@ class MainActivity : AppCompatActivity() {
      * Comprueba si existe una sesión activa
      */
     private fun isThereAnActiveSession(): Boolean {
-        val idTecnico = session.getTechnicianId()
         // Comprobamos el id del técnico
-        if(session.getTechnicianId() == -1){
+        if(!session.isLoggedIn()){
             // No hay session guardada
             // Redirigimos a la pantalla de inicio de session
             val intent = Intent(this, LoginActivity::class.java)
@@ -143,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Existe session
-        val nombreTecnico = session.getTechnicianName(this)
+        val nombreTecnico = session.getTechnicianName()
         Toast.makeText(this, getString(R.string.tech_service_message_login_ok), Toast.LENGTH_SHORT).show()
 
         return true

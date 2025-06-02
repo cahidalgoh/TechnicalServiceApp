@@ -3,6 +3,7 @@ package com.itesthida.techserviceapp.data.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.itesthida.techserviceapp.R
 import com.itesthida.techserviceapp.data.database.entities.Customer
 import com.itesthida.techserviceapp.data.database.entities.Equipment
 import com.itesthida.techserviceapp.data.database.entities.EquipmentType
@@ -24,7 +25,7 @@ import com.itesthida.techserviceapp.data.database.entities.Technician
  * El constructor privado toma un context (necesario para SQLiteOpenHelper), pero usa
  * context.applicationContext para evitar fugas de memoria debido al ciclo de vida de las actividades.
  */
-class DatabaseHelper private constructor(context: Context) :
+class DatabaseHelper private constructor(private val context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
         private var database: SQLiteDatabase? = null
@@ -177,6 +178,8 @@ class DatabaseHelper private constructor(context: Context) :
         db.execSQL(SQL_CREATE_EQUIPMENT)
         db.execSQL(SQL_CREATE_TASK_ORDERS)
 
+        // Insertamos los estados iniciales
+        insertInitialStates(context, db)
     }
 
     /**
@@ -225,5 +228,17 @@ class DatabaseHelper private constructor(context: Context) :
      */
     fun getDatabase(): SQLiteDatabase? {
         return database
+    }
+
+    private fun insertInitialStates(context: Context, db: SQLiteDatabase) {
+        val states = listOf(
+            context.getString(R.string.state_pending),
+            context.getString(R.string.state_progress),
+            context.getString(R.string.state_completed),
+            context.getString(R.string.state_cancelled)
+        )
+        for (state in states) {
+            db.execSQL("INSERT INTO ${State.TABLE_NAME} (${State.COLUMN_NAME_STATE_NAME}) VALUES ('$state')")
+        }
     }
 }

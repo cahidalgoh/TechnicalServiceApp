@@ -8,7 +8,7 @@ data class EquipmentType(
 ) {
     companion object{
         // Constante para el id por defecto
-        const val DEFAULT_ID = -1L
+        const val DEFAULT_ID = -1
         // Constantes para los datos de la tabla, nombre de tabla y columnas
         const val TABLE_NAME = "EQUIPMENT_TYPES"
         const val COLUMN_NAME_ID = "ID"

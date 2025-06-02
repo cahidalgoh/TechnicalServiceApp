@@ -34,7 +34,7 @@ class TechServiceUtils {
             return hashBytes.joinToString("") { "%02x".format(it) }
         }
 
-        fun validateEmail(email: String): Boolean{
+        fun isValidEmail(email: String): Boolean{
             val emailPattern = Patterns.EMAIL_ADDRESS
             return emailPattern.matcher(email).matches()
             //https://www.youtube.com/watch?v=vwD00u6Lshw

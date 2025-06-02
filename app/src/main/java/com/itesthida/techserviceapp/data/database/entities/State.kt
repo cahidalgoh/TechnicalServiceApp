@@ -6,7 +6,7 @@ data class State(
 ) {
     companion object{
         // Constante para el di por defecto
-        const val DEFAULT_ID = -1L
+        const val DEFAULT_ID = -1
         // Constantes para los datos de la tabla, nombre de tabla y columnas
         const val TABLE_NAME = "STATES"
         const val COLUMN_NAME_ID = "ID"
