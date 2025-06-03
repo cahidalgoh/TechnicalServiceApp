@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TechnicalServiceApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.CustomerDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.CustomersListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.AddCustomerActivity"
             android:exported="false" />
         <activity

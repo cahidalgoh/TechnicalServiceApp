@@ -8,6 +8,7 @@ data class Customer(
     val phone: String,
     val address: String
 ) {
+    lateinit var equipments: List<Equipment>
     companion object{
         // Constante para el id por defecto
         const val DEFAULT_ID = -1L

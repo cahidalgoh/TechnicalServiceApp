@@ -41,6 +41,7 @@
 
         <EditText android:id="@+id/etLastName"
             android:hint="@string/new_customer_last_name"
+            android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -58,6 +59,7 @@
 
         <EditText android:id="@+id/eTAddress"
             android:hint="@string/new_customer_address"
+            android:inputType="textPostalAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -74,6 +76,7 @@
 
         <EditText android:id="@+id/etSerialNumber"
             android:hint="@string/new_customer_serial_number"
+            android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

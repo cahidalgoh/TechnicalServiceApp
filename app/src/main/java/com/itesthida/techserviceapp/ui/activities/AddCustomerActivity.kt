@@ -1,9 +1,12 @@
 package com.itesthida.techserviceapp.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,6 +19,7 @@ import com.itesthida.techserviceapp.data.database.repository.CustomerRepository
 import com.itesthida.techserviceapp.data.database.repository.EquipmentRepository
 import com.itesthida.techserviceapp.data.database.repository.EquipmentTypeRepository
 import com.itesthida.techserviceapp.data.database.repository.impl.CustomerRepositoryImpl
+import com.itesthida.techserviceapp.data.database.repository.impl.EquipmentRepositoryImpl
 import com.itesthida.techserviceapp.data.database.repository.impl.EquipmentTypeRepositoryImpl
 import com.itesthida.techserviceapp.databinding.ActivityAddCustomerBinding
 
@@ -51,6 +55,9 @@ class AddCustomerActivity : AppCompatActivity() {
         initComponents()
 
         // Inicialización de los listeners
+        // Añadir otro cliente
+        // Ver detalle del cliente
+        // Ver todos los clientes
         initListeners()
     }
 
@@ -64,6 +71,9 @@ class AddCustomerActivity : AppCompatActivity() {
 
         // Inicializamos el repositorio para obtener los tipos de equipos
         equipmentTypeRepository = EquipmentTypeRepositoryImpl(this)
+
+        // Inicializamos el repositorio para guardar el equipo del cliente
+        equipmentRepository = EquipmentRepositoryImpl(this)
 
         // Cargamos los tipos de equipos
         loadEquipmentTypes()
@@ -92,7 +102,50 @@ class AddCustomerActivity : AppCompatActivity() {
             // Guardamos el Equipo del cliente
             saveEquipment(customerId, selectedType.id, serialNumber)
 
+            // Mostramos AlertDialog al usuario
+            showPostCreationDialog(customerId)
         }
+    }
+
+    private fun showPostCreationDialog(customerId: Long) {
+        val options = arrayOf(
+            getString(R.string.new_customer_option_detail_customer),
+            getString(R.string.new_customer_option_create_another_customer),
+            getString(R.string.new_customer_option_view_all_customers)
+        )
+        AlertDialog.Builder(this)
+            .setTitle(R.string.new_customer_created_title)
+            //.setMessage(R.string.new_customer_created_message) Cuando se hace uso de items, no se usa el message
+            .setItems(options){ dialog, which ->
+                when(which){
+                    0 ->{// Detalle del cliente creado
+                        val intent = Intent(this@AddCustomerActivity, CustomerDetailActivity::class.java)
+                        intent.putExtra("customerId", customerId)
+                        startActivity(intent)
+                        finish()
+                    }
+                    1 ->{// Nuevo cliente
+                        clearForm()
+                        dialog.dismiss()
+                    }
+                    2 ->{// Ver todos los clientes
+                            startActivity(Intent(this@AddCustomerActivity, CustomersListActivity::class.java))
+                        finish()
+                    }
+                }
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun clearForm() {
+        binding.etName.text.clear()
+        binding.etLastName.text.clear()
+        binding.etEmail.text.clear()
+        binding.etPhone.text.clear()
+        binding.eTAddress.text.clear()
+        binding.etSerialNumber.text.clear()
+        binding.spinnerEquipmentType.setSelection(0)
     }
 
     private fun loadEquipmentTypes(){
@@ -130,12 +183,5 @@ class AddCustomerActivity : AppCompatActivity() {
                 serialNumber
             )
         )
-
-        /*
-
-    val customer: Customer,
-    val equipmentType: EquipmentType,
-    val serialNumber: String
-         */
     }
 }

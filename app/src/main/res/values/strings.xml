@@ -59,7 +59,8 @@
     <string name="state_completed">Completed</string>
     <string name="state_cancelled">Cancelled</string>
 
-    <!-- New technician -->
+
+    <!-- New Customer -->
     <string name="new_customer_text">Register new customer</string>
     <string name="new_customer_bt_save">Save customer</string>
     <string name="new_customer_name">Name</string>
@@ -69,4 +70,14 @@
     <string name="new_customer_address">Address</string>
     <string name="new_customer_equipment_type">Equipment type</string>
     <string name="new_customer_serial_number">Serial number</string>
+    <string name="new_customer_created_title">Customer created</string>
+    <string name="new_customer_created_message">The customer has created correctly</string>
+    <string name="new_customer_option_detail_customer">View client details</string>
+    <string name="new_customer_option_create_another_customer">Add another client</string>
+    <string name="new_customer_option_view_all_customers">View all clients</string>
+
+
+    <!-- New Customer -->
+    <string name="detail_customer_error_get_data">Error getting client data</string>
+
 </resources>
