@@ -5,6 +5,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.itesthida.techserviceapp.R
 import com.itesthida.techserviceapp.data.database.entities.Customer
 import com.itesthida.techserviceapp.data.database.repository.CustomerRepository
@@ -58,5 +60,7 @@ class CustomersListActivity : AppCompatActivity() {
 
         // Configuramos el RecyclerView
         binding.rvCustomers.adapter = adapter
+
+        binding.rvCustomers.layoutManager = LinearLayoutManager(this)
     }
 }

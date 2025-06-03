@@ -11,6 +11,7 @@ import com.itesthida.techserviceapp.databinding.ItemCustomerBinding
 class CustomerAdapter(
     var items: List<Customer>
 ) : Adapter<CustomerViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomerViewHolder {
         val binding = ItemCustomerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CustomerViewHolder(binding)
@@ -23,14 +24,20 @@ class CustomerAdapter(
 
         holder.render(customer)
     }
+
+    fun updateItems(items: List<Customer>){
+        this.items = items
+        notifyDataSetChanged()
+    }
 }
 
 class CustomerViewHolder(val binding: ItemCustomerBinding) : ViewHolder(binding.root){
+
     private val equipmentAdapter = EquipmentAdapter(emptyList())
 
     init {
         binding.rvEquipments.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = equipmentAdapter
             setHasFixedSize(true)
             isNestedScrollingEnabled = false // Mejor usar la propiedad Kotlin directamente
@@ -44,6 +51,8 @@ class CustomerViewHolder(val binding: ItemCustomerBinding) : ViewHolder(binding.
         // Solo actualiza la lista, no vuelvas a asignar adapter ni layoutManager
         equipmentAdapter.updateList(customer.equipments)
     }
+
+
     /*
     private val equipmentAdapter = EquipmentAdapter(emptyList()) // ahora es un ListAdapter
 
